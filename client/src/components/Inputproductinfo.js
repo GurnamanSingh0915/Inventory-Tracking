@@ -192,6 +192,10 @@ useEffect(()=>{
 }, []);
 
 
+useEffect(()=>{
+  console.log(locationCity);
+});
+
 
 
 const handleUserKeyPress = event => {
@@ -279,20 +283,30 @@ const [isOpened, setIsOpened] = useState(false);
        />
        <select onChange={(e) => setChosenWarehouse(e.target.value)}>
           <option value="chosenWarehouse">Warehouse</option>
-       
-          {warehouse.map(warehouse => (     
-                    <option value={warehouse} >
-                      {warehouse}
+          <option value="Distributed Center">Distributed Center</option>
+          <option value="Cold Storage">Cold Storage</option>
+          <option value="On-Demand Storage">On-Demand Storage</option>
+          <option value="Fulfillment Operations">Fulfillment Operations</option>
+
+          {warehouse.map(ware => (     
+                    <option value = {warehouse.length}>
+                      {ware}
                     </option>
 
           ))}
         </select>
         <select  onChange={(e) => setChosenLocationCity(e.target.value)}>
           <option value="chosenLocationCity">Location</option>
-        
-          {locationCity.map(locationCity => (               
-                    <option value={locationCity}>
-                      {locationCity}
+          <option value="Atlanta, GA">Atlanta, GA</option>
+          <option value="Alpharetta, Atlanta">Alpharetta, GA</option>
+          <option value="Ottawa, Canada">Ottawa, Canada</option>
+          <option value="Toronto, Canada">Toronto, Canada</option>
+          <option value="Montreal, Canada">Montreal, Canada</option>
+          
+
+          {locationCity.map(location => (               
+                    <option value = {locationCity.length}>
+                      {location}
                     </option>
 
           ))}        
