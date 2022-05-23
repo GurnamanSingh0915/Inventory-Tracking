@@ -1,14 +1,14 @@
 import React, { Fragment, useState } from "react";
 
-const EditPlayer = ({ player }) => {
+const Editproductinfo = ({ productinfo }) => {
   //editText function
 
-  const editText = async (id, player_status) => {
+  const editText = async (id, productinfo_status) => {
     try {
-      const body = {new_id, first_name, last_name, codename, status : player_status };
+      const body = {new_id, product_name, quantity, codename, status : productinfo_status };
 
       //proxy
-      await fetch(`/players/${id}`, {
+      await fetch(`/productinfos/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -19,35 +19,35 @@ const EditPlayer = ({ player }) => {
     }
   };
 
-  const [new_id, set_NewId] = useState(player.id)
-  const [first_name, setFirst_name] = useState(player.first_name);
-  const [last_name, setLast_name] = useState(player.last_name);
-  const [codename, setCodename] = useState(player.codename);
+  const [new_id, set_NewId] = useState(productinfo.id)
+  const [product_name, setProduct_name] = useState(productinfo.product_name);
+  const [quantity, setQuantity] = useState(productinfo.quantity);
+  const [codename, setCodename] = useState(productinfo.codename);
  
-  if(player.status === 'red'){
+  if(productinfo.status === 'red'){
   return (
     <Fragment>
       <button
         type="button"
         class="btn btn-primary"
         data-toggle="modal"
-        data-target={`#id${player.id}`}
+        data-target={`#id${productinfo.id}`}
       >
         Edit
       </button>
       <div
         class="modal"
-        id={`id${player.id}`}
+        id={`id${productinfo.id}`}
       >
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Edit Player</h4>
+              <h4 class="modal-title">Edit productinfo</h4>
               <button
                 type="button"
                 class="close"
                 data-dismiss="modal"
-                onClick={() => setFirst_name(player.first_name)}
+                onClick={() => setProduct_name(productinfo.product_name)}
               >
                 &times;
               </button>
@@ -67,9 +67,9 @@ const EditPlayer = ({ player }) => {
               <input
                   type="text"
                   className="form-control"
-                  value={first_name}
-                  onChange={(e) => setFirst_name(e.target.value)}
-                  placeholder={"Edit First Name"}
+                  value={product_name}
+                  onChange={(e) => setProduct_name(e.target.value)}
+                  placeholder={"Edit Product Name"}
               />
               
             </div>
@@ -77,9 +77,9 @@ const EditPlayer = ({ player }) => {
               <input
                 type="text"
                 className="form-control"
-                value={last_name}
-                onChange={(e) => setLast_name(e.target.value)}
-                placeholder={"Edit Last Name"}
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                placeholder={"Edit Quantity Name"}
               />
             </div>
             <div class="modal-body">
@@ -97,7 +97,7 @@ const EditPlayer = ({ player }) => {
                 type="button"
                 class="btn btn-primary"
                 data-dismiss="modal"
-                onClick={() => editText(player.id, 'red')}
+                onClick={() => editText(productinfo.id, 'red')}
               >
                 Edit
               </button>
@@ -105,7 +105,7 @@ const EditPlayer = ({ player }) => {
                 type="button"
                 class="btn btn-danger"
                 data-dismiss="modal"
-                onClick={() => setFirst_name(player.first_name)}
+                onClick={() => setProduct_name(productinfo.product_name)}
               >
                 Close
               </button>
@@ -115,30 +115,30 @@ const EditPlayer = ({ player }) => {
       </div>
     </Fragment>
   );
-}else if(player.status === 'green'){
+}else if(productinfo.status === 'green'){
   return (
     <Fragment>
       <button
         type="button"
         class="btn btn-primary"
         data-toggle="modal"
-        data-target={`#id${player.id}`}
+        data-target={`#id${productinfo.id}`}
       >
         Edit
       </button>
       <div
         class="modal"
-        id={`id${player.id}`}
+        id={`id${productinfo.id}`}
       >
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Edit Player</h4>
+              <h4 class="modal-title">Edit productinfo</h4>
               <button
                 type="button"
                 class="close"
                 data-dismiss="modal"
-                onClick={() => setFirst_name(player.first_name)}
+                onClick={() => setProduct_name(productinfo.product_name)}
               >
                 &times;
               </button>
@@ -158,18 +158,18 @@ const EditPlayer = ({ player }) => {
               <input
                   type="text"
                   className="form-control"
-                  value={first_name}
-                  onChange={(e) => setFirst_name(e.target.value)}
-                  placeholder={"Edit First Name"}
+                  value={product_name}
+                  onChange={(e) => setProduct_name(e.target.value)}
+                  placeholder={"Edit product Name"}
               />
             </div>
             <div className="modal-body">
               <input
                   type="text"
                   className="form-control"
-                  value={last_name}
-                  onChange={(e) => setLast_name(e.target.value)}
-                  placeholder={"Edit Last Name"}
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  placeholder={"Edit quantity Name"}
               />
             </div>
             <div className="modal-body">
@@ -187,7 +187,7 @@ const EditPlayer = ({ player }) => {
                 type="button"
                 class="btn btn-primary"
                 data-dismiss="modal"
-                onClick={() => editText(player.id, 'green')}
+                onClick={() => editText(productinfo.id, 'green')}
               >
                 Edit
               </button>
@@ -195,7 +195,7 @@ const EditPlayer = ({ player }) => {
                 type="button"
                 class="btn btn-danger"
                 data-dismiss="modal"
-                onClick={() => setFirst_name(player.first_name)}
+                onClick={() => setProduct_name(productinfo.product_name)}
               >
                 Close
               </button>
@@ -208,4 +208,4 @@ const EditPlayer = ({ player }) => {
 }
 };
 
-export default EditPlayer;
+export default Editproductinfo;

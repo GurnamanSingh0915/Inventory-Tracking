@@ -1,19 +1,19 @@
 
 --CREATE DATABASE playerlist;
 CREATE TYPE STATUS AS ENUM('red', 'green', 'inactive');
-CREATE TABLE player(
+CREATE TABLE productinfo(
     id SERIAL PRIMARY KEY,
-    first_name VARCHAR(30),
-    last_name VARCHAR(30),
-    codename VARCHAR(30),
-    warehouse VARCHAR(30),
-    locationCity VARCHAR(30),
+    product_name VARCHAR(100),
+    quantity VARCHAR(100),
+    price VARCHAR(100),
+    warehouse VARCHAR(100),
+    locationCity VARCHAR(100),
     status STATUS DEFAULT 'inactive'
 );
 
 CREATE TABLE warehouselocation(
 
-warehouse VARCHAR(30),
-locationCity VARCHAR(30)
+warehouse VARCHAR(100),
+locationCity VARCHAR(100)
 
 );

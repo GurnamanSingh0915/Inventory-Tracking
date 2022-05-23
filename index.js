@@ -91,29 +91,66 @@ const createSocketWeb = (msg) => {
 
 
 
-//CREATE A PLAYER
-app.post("/players", async(req, res) =>{
+//CREATE A productinfo
+app.post("/productinfos", async(req, res) =>{
     try{
-      const{id, first_name, last_name, codename, warehouse, locationCity, status} = req.body;
+      const{id, product_name, quantity, price, warehouse, locationCity, status} = req.body;
       
-      const newPlayer = await pool.query(
-      "INSERT INTO player (id, first_name, last_name, codename, warehouse, locationCity, status) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *",
-      [id, first_name, last_name, codename, warehouse, locationCity, status]
+      const newproductinfo = await pool.query(
+      "INSERT INTO productinfo (id, product_name, quantity, price, warehouse, locationCity, status) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *",
+      [id, product_name, quantity, price, warehouse, locationCity, status]
       );
 
-      res.json(newPlayer.rows[0]);
+      res.json(newproductinfo.rows[0]);
    
     }catch(err){
         console.error(err.message);
     }
 });
 
-//GET ALL PLAYERS DEPENDING ON STATUS
-app.get("/player_status/:status", async(req,res)=>{
+//CREATE instance of locationInfo
+app.post("/warehouselocations", async(req, res) =>{
+    try{
+      const{ warehouseInfo, locationInfo} = req.body;
+      
+      const newLocation = await pool.query(
+      "INSERT INTO warehouselocation (warehouse, locationCity) VALUES($1,$2) RETURNING *",
+      [ warehouseInfo, locationInfo]
+      );
+
+      res.json(newLocation.rows[0]);
+   
+    }catch(err){
+        console.error(err.message);
+    }
+});
+
+//GET ALL warehouses 
+app.get("/warehouses", async(req,res)=>{
+    try{
+        const allWarehouses = await pool.query("SELECT warehouse FROM warehouselocation");
+        res.json(allWarehouses.rows);
+    }catch(err){
+        console.error(err.message);
+    }
+});
+
+//GET ALL locations 
+app.get("/locations", async(req,res)=>{
+    try{
+        const allLocations = await pool.query("SELECT locationCity FROM warehouselocation");
+        res.json(allLocations.rows);
+    }catch(err){
+        console.error(err.message);
+    }
+});
+
+//GET ALL productinfoS DEPENDING ON STATUS
+app.get("/productinfo_status/:status", async(req,res)=>{
     try{
         const status = req.params.status;
-        const allPlayers = await pool.query("SELECT * FROM player WHERE status = $1", [status]);
-        res.json(allPlayers.rows);
+        const allproductinfos = await pool.query("SELECT * FROM productinfo WHERE status = $1", [status]);
+        res.json(allproductinfos.rows);
     }catch(err){
         console.error(err.message);
     }
@@ -122,48 +159,50 @@ app.get("/player_status/:status", async(req,res)=>{
 app.get("/check_id/:id", async(req,res)=>{
     try{
         const id = req.params.id;
-        const found = await pool.query("SELECT status FROM player WHERE id = $1", [id]);
+        const found = await pool.query("SELECT status FROM productinfo WHERE id = $1", [id]);
         found.rows.length === 0 ? res.json({"id_exists" : "False"}) : res.json({"id_exists" : "True", "status" : found.rows[0].status});
     }catch(err){
         console.error(err.message);
     }
 });
 
-//GET A PLAYER BASED ON ID
-app.get("/player_id/:id", async(req,res) =>{
+//GET A productinfo BASED ON ID
+app.get("/productinfo_id/:id", async(req,res) =>{
     try{
     const id = req.params.id;
-    const player = await pool.query("SELECT * FROM player WHERE id = $1", 
+    const productinfo = await pool.query("SELECT * FROM productinfo WHERE id = $1", 
     [id]
     );
 
-    res.json(player.rows[0])
+    res.json(productinfo.rows[0])
     }catch(err){
         console.error(err.message);
     }
 });
 
-//UPDATE A PLAYER
-app.put("/players/:id", async(req,res)=>{
+
+
+//UPDATE A productinfo
+app.put("/productinfos/:id", async(req,res)=>{
     try{
         const id = req.params.id;
-        const{new_id, first_name, last_name, codename, status} = req.body;
+        const{new_id, product_name, quantity, price, status} = req.body;
         await pool.query(
-            'UPDATE "player" SET id = $1, first_name = $2, last_name = $3, codename = $4 , status = $5 WHERE id = $6',
-            [new_id, first_name, last_name, codename, status, id]
+            'UPDATE "productinfo" SET id = $1, product_name = $2, quantity = $3, price = $4 , status = $5 WHERE id = $6',
+            [new_id, product_name, quantity, price, status, id]
         );
-        res.json("Player was updated!");
+        res.json("productinfo was updated!");
     }catch(err){
         console.error(err.message);
     }
 });
 
-//DELETE A PLAYER
-app.delete("/players/:id", async(req,res)=>{
+//DELETE A productinfo
+app.delete("/productinfos/:id", async(req,res)=>{
     try{
         const id = req.params.id;
-        await pool.query("DELETE FROM player WHERE id = $1", [id]);
-        res.json("Player was deleted!");
+        await pool.query("DELETE FROM productinfo WHERE id = $1", [id]);
+        res.json("productinfo was deleted!");
 
     }catch(err){
         console.error(err.message);

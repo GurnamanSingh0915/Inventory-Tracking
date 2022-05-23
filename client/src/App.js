@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
-import InputPlayer from "./components/InputPlayer";
-import AppSlashPlayer from "./components/AppSplashPlayer";
+import Inputproductinfo from "./components/Inputproductinfo";
+import AppSlashproductinfo from "./components/AppSplashproductinfo";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -10,9 +10,9 @@ function App() {
     <Fragment>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<AppSlashPlayer/>}/>
-          <Route index element={<AppSlashPlayer/>} />
-          <Route path="/entryscreen" element={<InputPlayer />} />
+          <Route path="/" element={<AppSlashproductinfo/>}/>
+          <Route index element={<AppSlashproductinfo/>} />
+          <Route path="/entryscreen" element={<Inputproductinfo/>} />
       </Routes>
     </BrowserRouter>
     
